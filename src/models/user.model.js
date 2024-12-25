@@ -12,21 +12,38 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      lowercase: true,
+      validate: {
+        validator: (value) => validator.isEmail(value),
+        message: "Invalid Email format",
+      },
     },
     password: {
       type: String,
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error(
-            "Password must contain at least one letter and one number"
+      required: true,
+      trim: true,
+      validate: {
+        validator: (value) => {
+          return (
+            value.length >= 8 && /[a-zA-Z]/.test(value) && /\d/.test(value)
           );
-        }
+        },
+        message:
+          "Password must be at least 8 characters long and contain at least one letter and one number",
       },
     },
     walletMoney: {
+      type: Number,
+      required: true,
+      default: config.default_wallet_money,
     },
     address: {
       type: String,
+      trim: false,
       default: config.default_address,
     },
   },
@@ -43,9 +60,9 @@ const userSchema = mongoose.Schema(
  * @returns {Promise<boolean>}
  */
 userSchema.statics.isEmailTaken = async function (email) {
+  const user = await this.findOne({ email });
+  return !!user; // converts value to boolean
 };
-
-
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS
 /*
@@ -56,3 +73,5 @@ userSchema.statics.isEmailTaken = async function (email) {
 /**
  * @typedef User
  */
+
+module.exports.User = mongoose.model("User", userSchema);
