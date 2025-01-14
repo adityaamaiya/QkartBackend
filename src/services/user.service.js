@@ -30,7 +30,7 @@ const getUserById = async (id) => {
 const getUserByEmail = async (email) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+    throw new ApiError(httpStatus.UNAUTHORIZED, "User not found");
   }
   return user;
 };
