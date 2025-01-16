@@ -70,9 +70,9 @@ userSchema.statics.isEmailTaken = async function (email) {
  * @param {string} password - The user's password
  * @returns {Promise<boolean>}
  */
- userSchema.methods.isPasswordMatch = async function (password) {
-  const user =  this;
-  return await bcrypt.compare(password,user.password); // converts value to boolean
+userSchema.methods.isPasswordMatch = async function (password) {
+  const user = this;
+  return await bcrypt.compare(password, user.password); // converts value to boolean
 };
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS

@@ -16,7 +16,6 @@ const validate = (schema) => (req, res, next) => {
         "Supports JSON request body only"
       )
     );
-    
   }
 
   // cherry-pick from the input schema ["params", "query", "body"] fields

@@ -11,7 +11,7 @@ const { User } = require("../models");
  */
 const jwtOptions = {
   secretOrKey: config.jwt.secret,
-  jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
 // TODO: CRIO_TASK_MODULE_AUTH - Implement verify callback for passport strategy to find the user whose token is passed
@@ -27,19 +27,18 @@ const jwtOptions = {
  * @param done - callback function
  */
 const jwtVerify = async (payload, done) => {
-  try{
-    if(payload.type !== tokenTypes.ACCESS){
+  try {
+    if (payload.type !== tokenTypes.ACCESS) {
       done(new Error("Invalid token type"), false);
     }
 
     const user = await User.findById(payload.sub);
-    if(!user){
-      return done(null,false);
+    if (!user) {
+      return done(null, false);
     }
-    done(null,user);
-  }
-  catch(error){
-    done(error,false);
+    done(null, user);
+  } catch (error) {
+    done(error, false);
   }
 };
 
