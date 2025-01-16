@@ -87,7 +87,7 @@ const setAddress = catchAsync(async (req, res) => {
 
   const address = await userService.setAddress(user, req.body.address);
 
-  res.send({
+  res.status(httpStatus.OK).send({
     address: address,
   });
 });

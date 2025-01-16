@@ -93,7 +93,7 @@ const createUser = async (user) => {
  * @returns {Promise<User>}
  */
 const getUserAddressById = async (id) => {
-  return  User.findOne({_id:id}, {email:1, address:1});
+  return User.findOne({ _id: id }, { email: 1, address: 1 });
 };
 
 /**

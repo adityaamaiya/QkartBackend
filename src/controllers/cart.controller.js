@@ -79,7 +79,7 @@ const updateProductInCart = catchAsync(async (req, res) => {
   const cart = await cartService.updateProductInCart(
     req.user,
     req.body.productId,
-    req.body.quantity,
+    req.body.quantity
   );
 
   res.status(httpStatus.OK).send(cart);
