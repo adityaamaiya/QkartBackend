@@ -57,6 +57,7 @@ const addProductToCart = async (user, productId, quantity) => {
         cartItems: [],
         paymentOption: config.default_payment_option,
       });
+      await cart.save();
     } catch (error) {
       throw new ApiError(
         httpStatus.INTERNAL_SERVER_ERROR,
@@ -197,37 +198,37 @@ const deleteProductFromCart = async (user, productId) => {
  * @returns {Promise}
  * @throws {ApiError} when cart is invalid
  */
-const checkout = async (user) => {
-  const cart = await Cart.findOne({ email: user.email });
+ const checkout = async (user) => {
+  const cart = await Cart.findOne({email:user.email})
 
-  if (cart === null) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User does not have an cart");
+  if(cart == null){
+    throw new ApiError(httpStatus.NOT_FOUND,"User does not have a cart");
   }
-  if (cart.cartItems.length === 0) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Cart is empty");
-  }
-  const hasSetNonDefaultAddress = await user.hasSetNonDefaultAddress()
-  if (!hasSetNonDefaultAddress) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "User's address is not set");
-  }
-  const totalAmount = cart.cartItems.reduce(
-    (sum, item) => sum + item.product.cost * item.quantity,
-    0
-  );
-  if (user.walletMoney < totalAmount) {
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Not enough wallet balance to complete the purchase"
-    );
+  if(cart.cartItems.length==0)
+  {
+    throw new ApiError(httpStatus.BAD_REQUEST,"User does not have items in the cart");
   }
 
-  user.walletMoney -= totalAmount;
+  const hasSetNonDefaultAddress = await user.hasSetNonDefaultAddress();
+  if(!hasSetNonDefaultAddress)
+  throw new ApiError(httpStatus.BAD_REQUEST,"Address not set");
 
+  const total = cart.cartItems.reduce((acc,item)=>{
+    acc=acc+(item.product.cost *item.quantity);
+    return acc;
+  },0)
+
+  if(total > user.walletMoney){
+    throw new ApiError(httpStatus.BAD_REQUEST,"User does not have sufficient balance")
+  }
+  user.walletMoney -= total;
   await user.save();
 
-  cart.cartItems = [];
+  cart.cartItems= []
   await cart.save();
 };
+
+
 
 module.exports = {
   getCartByUser,

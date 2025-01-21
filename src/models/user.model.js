@@ -84,7 +84,7 @@ userSchema.methods.isPasswordMatch = async function (password) {
  *
  * @returns {Promise<boolean>}
  */
-userSchema.methods.c = async function () {
+userSchema.methods.hasSetNonDefaultAddress = async function () {
   const user = this;
   return user.address !== config.default_address;
 };

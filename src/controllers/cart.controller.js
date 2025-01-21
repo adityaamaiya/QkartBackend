@@ -89,11 +89,13 @@ const updateProductInCart = catchAsync(async (req, res) => {
  * Checkout user's cart
  */
 const checkout = catchAsync(async (req, res) => {
-  if(!req.user){
-    throw new ApiError(httpStatus.UNAUTHORIZED,"User not authenticated")
+  if (!req.user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "User not authenticated");
   }
   await cartService.checkout(req.user);
-  return res.status(httpStatus.NO_CONTENT).send({ message: "Checkout Successfull" });
+  return res
+    .status(httpStatus.NO_CONTENT)
+    .send({ message: "Checkout Successfull" });
 });
 
 module.exports = {
