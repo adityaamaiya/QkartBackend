@@ -12,8 +12,6 @@ import Search from "./components/Search";
 
 import Thanks from "./components/Thanks";
 
-import ipConfig from "./ipConfig.json";
-
 export const config = {
   endpoint: `https://myqkartbackend.onrender.com/v1`,
 };
