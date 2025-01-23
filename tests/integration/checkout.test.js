@@ -53,7 +53,6 @@ describe("Cart routes", () => {
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is "400 BAD REQUEST"
       //  expect(true).toEqual(false);
       expect(res.status).toEqual(httpStatus.BAD_REQUEST);
-      
     });
 
     it("should return 400 if user's address is not set", async () => {
@@ -84,7 +83,7 @@ describe("Cart routes", () => {
 
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is 400
       //  expect(true).toEqual(false);
-      expect(res.status).toEqual(httpStatus.BAD_REQUEST)
+      expect(res.status).toEqual(httpStatus.BAD_REQUEST);
     });
 
     it("should return 204 if cart is valid", async () => {
@@ -98,15 +97,13 @@ describe("Cart routes", () => {
 
       // TODO: CRIO_TASK_MODULE_TEST - Assert if status code is 204
       //  expect(true).toEqual(false);
-      expect(res.status).toEqual(httpStatus.NO_CONTENT); 
+      expect(res.status).toEqual(httpStatus.NO_CONTENT);
       // TODO: CRIO_TASK_MODULE_TEST - Get the cart for "userOne" and assert if
       // - Cart exists
       // - Length of "cartItems" array is 0
-      const databaseCart = await Cart.findOne({email: userOne.email})
-      expect(databaseCart).toBeDefined()
-      expect(databaseCart.cartItems.length).toEqual(0)
-
-
+      const databaseCart = await Cart.findOne({ email: userOne.email });
+      expect(databaseCart).toBeDefined();
+      expect(databaseCart.cartItems.length).toEqual(0);
     });
   });
 });
