@@ -242,7 +242,7 @@ class Search extends React.Component {
    */
   getProductElement = (product) => {
     return (
-      <Col xs={24} sm={12} xl={6} key={product._id}>
+      <Col xs={24} md={18} sm={12} xl={6} key={product._id}>
         <Product
           product={product}
           addToCart={() => {
